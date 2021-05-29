@@ -22,7 +22,7 @@ class point:
         return str(self.x) + "," + str(self.y)
 
     def L2(self):
-        return (self.x ** 2 + self.y ** 2) ** 0.5
+        return math.sqrt(self.x ** 2 + self.y ** 2)
 
 
 class example:
@@ -37,22 +37,22 @@ class example:
     def subject_to(self, p: point):
         return 2 * p.x + 3 * p.y - 5
 
-    def L(self, p: point, lam: float):
-        return self.F(p) + lam * self.subject_to(p) + 0.5 * self.rho * (self.subject_to(p) ** 2)
+    def L(self, p: point, lambda_: float):
+        return self.F(p) + lambda_ * self.subject_to(p) + 0.5 * self.rho * (self.subject_to(p) ** 2)
 
 
-def advance_retreat_method(loss_function: example, lama: float, start: point, direction: list, step=0,
+def advance_retreat_method(loss_function: example, lambda_: float, start: point, direction: list, step=0,
                            delta=0.1) -> tuple:
     alpha0, point0 = step, start
 
     alpha1 = alpha0 + delta
     point1 = point0 + point(direction[0] * delta, direction[1] * delta)
-    if loss_function.L(point0, lama) < loss_function.L(point1, lama):
+    if loss_function.L(point0, lambda_) < loss_function.L(point1, lambda_):
         while True:
             delta *= 2
             alpha2 = alpha0 - delta
             point2 = point0 - point(direction[0] * delta, direction[1] * delta)
-            if loss_function.L(point2, lama) < loss_function.L(point0, lama):
+            if loss_function.L(point2, lambda_) < loss_function.L(point0, lambda_):
                 alpha1, alpha0 = alpha0, alpha2
                 point1, point0 = point0, point2
             else:
@@ -62,22 +62,22 @@ def advance_retreat_method(loss_function: example, lama: float, start: point, di
             delta *= 2
             alpha2 = alpha1 + delta
             point2 = point1 + point(direction[0] * delta, direction[1] * delta)
-            if loss_function.L(point2, lama) < loss_function.L(point1, lama):
+            if loss_function.L(point2, lambda_) < loss_function.L(point1, lambda_):
                 alpha0, alpha1 = alpha1, alpha2
                 point0, point1 = point1, point2
             else:
                 return alpha0, alpha2
 
 
-def golden_search(loss_function: example, lama: float, start: point, direction: list, epsilon=0.1) -> float:
-    a, b = advance_retreat_method(loss_function, lama, start, direction)
+def golden_search(loss_function: example, lambda_: float, start: point, direction: list, epsilon=0.1) -> float:
+    a, b = advance_retreat_method(loss_function, lambda_, start, direction)
 
     # find the minimum
     golden_num = (math.sqrt(5) - 1) / 2
     p, q = a + (1 - golden_num) * (b - a), a + golden_num * (b - a)
     while abs(a - b) > epsilon:
-        f_p = loss_function.L(start + point(direction[0] * p, direction[1] * p), lama)
-        f_q = loss_function.L(start + point(direction[0] * q, direction[1] * q), lama)
+        f_p = loss_function.L(start + point(direction[0] * p, direction[1] * p), lambda_)
+        f_q = loss_function.L(start + point(direction[0] * q, direction[1] * q), lambda_)
         if f_p < f_q:
             b, q = q, p
             p = a + (1 - golden_num) * (b - a)
@@ -91,7 +91,7 @@ def golden_search(loss_function: example, lama: float, start: point, direction: 
 def drawResult(loss_function: example, points: list, label: str, epsilon: float, other_label=''):
     plt.figure()
     plt.title(
-        label + '(rho=' + str(loss_function.rho) + other_label + ',epsilon=' + '%.e' % epsilon + ',iteration=' + str(
+        label + '(rho=' + str(loss_function.rho) + other_label + ',epsilon=' + str(epsilon) + ',iteration=' + str(
             len(points)) + ')')
 
     # draw the function and condition

@@ -13,7 +13,6 @@ TOL = 1.0e-7
 
 weight = 0
 height = 0
-
 def bitmap_to_mat(bitmap_seq):
     matrix = []
     for bitmap_file in bitmap_seq:
@@ -59,7 +58,7 @@ def converged(Z, d_norm):
     print('ERR', err)
     return err < TOL
 
-
+#L(A,Z,Y)=||A||∗+λ||Z||1+1/2μ||D−A−E||2F+<Y,D−A−E>
 def svd_(X, k=-1):
     U, S, V = svd(X, full_matrices=False)
     if k < 0:
