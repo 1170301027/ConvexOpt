@@ -1,0 +1,9 @@
+1：	function(-1.000)=-2.000	function(-0.236)=-0.875	function(0.236)=-1.125	function(1.000)=0.000	
+2：	function(-0.236)=-0.875	function(0.236)=-1.125	function(0.528)=-0.971	function(1.000)=0.000	
+3：	function(-0.236)=-0.875	function(0.056)=-1.050	function(0.236)=-1.125	function(0.528)=-0.971	
+4：	function(0.056)=-1.050	function(0.236)=-1.125	function(0.348)=-1.106	function(0.528)=-0.971	
+5：	function(0.056)=-1.050	function(0.167)=-1.111	function(0.236)=-1.125	function(0.348)=-1.106	
+6：	function(0.167)=-1.111	function(0.236)=-1.125	function(0.279)=-1.123	function(0.348)=-1.106	
+7：	function(0.167)=-1.111	function(0.210)=-1.122	function(0.236)=-1.125	function(0.279)=-1.123	
+8：	function(0.210)=-1.122	function(0.236)=-1.125	function(0.252)=-1.125	function(0.279)=-1.123	
+9：	function(0.236)=-1.125	function(0.252)=-1.125	function(0.262)=-1.125	function(0.279)=-1.123	
