@@ -87,7 +87,7 @@ def goldsteinsearch(d,x,y, rho):
 
 
 def calLambda(x, y, d):
-    return goldsteinsearch(d,x,y,0.1)
+    return goldsteinsearch(d,x,y,0.01)
 
 def cyc_coo(x,y,n):
     lambda_ = calLambda(x,y,s(n))
@@ -127,18 +127,12 @@ start = time.time()
 for t in range(10000):
     x = np.matrix([[xv[-1]],
                   [yv[-1]]])
-    delta = cyc_coo(x[0, 0], x[1, 0],0)
+    delta = cyc_coo(x[0, 0], x[1, 0],t)
     x1 = x + delta
     if np.linalg.norm(grad(x1[0,0],x1[1,0])) < tol:
         break
     xv.append(x1[0, 0])
     yv.append(x1[1, 0])
-    delta = cyc_coo(x1[0, 0], x1[1, 0],1)
-    x2 = x1 + delta
-    if np.linalg.norm(grad(x2[0,0],x2[1,0])) < tol:
-        break
-    xv.append(x2[0, 0])
-    yv.append(x2[1, 0])
 end = time.time()
 print("iteration:" + str(t))
 print(xv)
