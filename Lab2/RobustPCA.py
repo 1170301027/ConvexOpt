@@ -1,12 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""
-@author: lenovo
-@file: RobustPCA.py
-@time: 2021/5/29 12:01
-"""
-
 import os
 import tkinter
 
@@ -59,7 +53,6 @@ def show_img(matrices, w, h):
             canvas.update()
             print("done")
     canvas.mainloop()
-
 
 def converged(Z, d_norm):
     err = np.linalg.norm(Z, 'fro') / d_norm
