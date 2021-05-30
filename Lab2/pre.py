@@ -4,25 +4,25 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 class point:
-    x, y = 0, 0
+    x, z = 0, 0
 
-    def __init__(self, x: float, y: float):
-        self.x, self.y = x, y
+    def __init__(self, x: float, z: float):
+        self.x, self.z = x, z
 
     def __add__(self, other):
-        return point(self.x + other.x, self.y + other.y)
+        return point(self.x + other.x, self.z + other.z)
 
     def __sub__(self, other):
-        return point(self.x - other.x, self.y - other.y)
+        return point(self.x - other.x, self.z - other.z)
 
     def __len__(self):
         return 2
 
     def __str__(self):
-        return str(self.x) + "," + str(self.y)
+        return str(self.x) + "," + str(self.z)
 
-    def L2(self):
-        return math.sqrt(self.x ** 2 + self.y ** 2)
+    def dis(self):
+        return math.sqrt(self.x ** 2 + self.z ** 2)
 
 
 class example:
@@ -32,13 +32,13 @@ class example:
         self.rho = rho
 
     def F(self, p: point):
-        return (p.x - 1) ** 2 + (p.y - 2) ** 2
+        return (p.x - 1) ** 2 + (p.z - 2) ** 2
 
     def subject_to(self, p: point):
-        return 2 * p.x + 3 * p.y - 5
+        return 2 * p.x + 3 * p.z - 5
 
-    def L(self, p: point, lambda_: float):
-        return self.F(p) + lambda_ * self.subject_to(p) + 0.5 * self.rho * (self.subject_to(p) ** 2)
+    def L(self, p: point, y_t: float):
+        return self.F(p) + y_t * self.subject_to(p) + 0.5 * self.rho * (self.subject_to(p) ** 2)
 
 
 def advance_retreat_method(loss_function: example, lambda_: float, start: point, direction: list, step=0,
@@ -104,21 +104,21 @@ def drawResult(loss_function: example, points: list, label: str, epsilon: float,
     plt.clabel(contour2, fontsize=8, colors='k')
 
     # draw the result
-    x, y = [], []
+    x, z = [], []
     for p in points:
         x.append(p.x)
-        y.append(p.y)
-    plt.plot(x, y, 'b*-')
+        z.append(p.z)
+    plt.plot(x, z, 'b*-')
     contour1 = plt.contour(X, Y, Z1, [loss_function.F(points[-1])], colors='blue')
     plt.clabel(contour1, inline=True, fontsize=8, colors='blue')
 
     # draw the start point
-    plt.scatter(points[0].x, points[0].y, color='blue')
-    plt.text(points[0].x, points[0].y, 'start(%.3g,%.3g,%.3g)' % (points[0].x, points[0].y, loss_function.F(points[0])),
+    plt.scatter(points[0].x, points[0].z, color='blue')
+    plt.text(points[0].x, points[0].z, 'start(%.3g,%.3g,%.3g)' % (points[0].x, points[0].z, loss_function.F(points[0])),
              color='blue', verticalalignment='top')
     # draw the end point
-    plt.scatter(points[-1].x, points[-1].y, color='blue')
-    plt.text(points[-1].x, points[-1].y,
-             'end(%.3g,%.3g,%.3g)' % (points[-1].x, points[-1].y, loss_function.F(points[-1])), color='blue',
+    plt.scatter(points[-1].x, points[-1].z, color='blue')
+    plt.text(points[-1].x, points[-1].z,
+             'end(%.3g,%.3g,%.3g)' % (points[-1].x, points[-1].z, loss_function.F(points[-1])), color='blue',
              verticalalignment='bottom')
     plt.show()
