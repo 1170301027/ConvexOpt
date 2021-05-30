@@ -58,6 +58,11 @@ def converged(Z, d_norm):
     print('ERR', err)
     return err < TOL
 
+#D = A + E
+
+#minA,E rank(A) + λ||E||0
+#minA,E ||A||∗ + λ||E||1
+
 #L(A,Z,Y)=||A||∗+λ||Z||1+1/2μ||D−A−E||2F+<Y,D−A−E>
 def svd_(X, k=-1):
     U, S, V = svd(X, full_matrices=False)
